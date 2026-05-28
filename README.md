@@ -1,4 +1,3 @@
-
 # Conjure ✦
 
 > **Summon anything into existence.**  
@@ -67,14 +66,13 @@ No frameworks. No build step. No dependencies on the client side.
 
 ## Features
 
-- **Side-by-side layout on desktop** — controls on the left, generated image on the right, no scrolling needed
 - **Dynamic prompt suggestions** — 30+ curated prompts per engine, never repeats until the pool is exhausted
 - **Smart edit mode** — ratio and resolution controls auto-hide when an image is provided, preventing watermarked output
 - **Dual image input** — paste a URL or upload directly from device (auto-uploaded to imgbb, public URL passed to AI)
 - **Required field enforcement** — engines that need an image (Morph) validate before sending requests
 - **Live status indicators** — upload progress, generation progress, success/failure states
 - **Save to device** — one-click download of generated images
-- **Responsive** — desktop gets split layout, mobile gets clean single-column view
+- **Responsive** — clean single-column layout that works across all screen sizes
 - **Security** — API keys stored in Vercel environment variables only, never in client code
 
 ---
@@ -159,7 +157,7 @@ This also keeps API keys out of client-side code entirely.
 - imgbb integration for converting local file uploads into public URLs
 - UX decisions around API limitations (watermark avoidance, required field logic)
 - Deploying and managing environment variables on Vercel
-- Responsive layout design — desktop split view vs mobile single column
+- Reading Vercel logs to debug real production errors like timeouts and JSON parse failures
 
 ---
 
