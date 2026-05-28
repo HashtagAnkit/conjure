@@ -424,7 +424,7 @@
           res: activeRes
         };
         
-        if (imageUrl) body.image_url = imageUrl;
+                if (imageUrl) body.links = imageUrl;
         
         const res = await fetch(NANO_PROXY, {
           method: 'POST',
