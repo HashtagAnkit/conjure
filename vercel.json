@@ -3,6 +3,14 @@
   "functions": {
     "api/generate.js": {
       "memory": 128,
+      "maxDuration": 60
+    },
+    "api/morph.js": {
+      "memory": 128,
+      "maxDuration": 60
+    },
+    "api/upload.js": {
+      "memory": 128,
       "maxDuration": 30
     }
   }
