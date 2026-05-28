@@ -413,7 +413,9 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ image_url: imageUrl, prompt: promptText })
         });
-        const data = await res.json();
+        const rawMorph = await res.text();
+        let data;
+        try { data = JSON.parse(rawMorph); } catch { throw new Error('Server error — try again'); }
         if (!data.success) throw new Error(data.error || 'Transformation failed');
         finalImageUrl = data.image_url;
         engineBadge.textContent = 'Morphed';
@@ -431,9 +433,11 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body)
         });
-        const data = await res.json();
+        const rawNano = await res.text();
+        let data;
+        try { data = JSON.parse(rawNano); } catch { throw new Error('Server error — try again'); }
         if (!data.success) throw new Error(data.error || 'Generation failed');
-        finalImageUrl = data.image_url;
+        finalImageUrl = data.url;
         engineBadge.textContent = 'NanoBanana · ' + (data.resolution || activeRes) + (data.is_edit ? ' · Edited' : '');
       }
 
