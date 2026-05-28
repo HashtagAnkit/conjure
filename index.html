@@ -427,7 +427,7 @@
         const res = await fetch(MORPH_PROXY, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ image_url: imageUrl, prompt: promptText })
+          body: JSON.stringify({ image_url: imageUrl, text: promptText })
         });
         const data = await res.json();
         if (!data.success) throw new Error(data.error || 'Transformation failed');
