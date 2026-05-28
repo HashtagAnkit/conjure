@@ -110,7 +110,6 @@
 </div>
 
 <script>
-  // --- Configuration & State ---
   const NANO_PROXY = '/api/generate';
   const UPLOAD_PROXY = '/api/upload';
   const MORPH_PROXY = '/api/morph';
@@ -169,7 +168,6 @@
   let nanoUsed = [];
   let morphUsed = [];
 
-  // --- DOM Elements ---
   const promptEl = document.getElementById('prompt');
   const charcountEl = document.getElementById('charcount');
   const genBtn = document.getElementById('genBtn');
@@ -193,7 +191,6 @@
   const previewName = document.getElementById('previewName');
   const uploadStatus = document.getElementById('uploadStatus');
 
-  // --- Utility Functions ---
   function updateCount() {
     const len = promptEl.value.length;
     charcountEl.textContent = len + ' character' + (len === 1 ? '' : 's');
@@ -202,7 +199,7 @@
   function setPrompt(text) {
     promptEl.value = text;
     promptEl.classList.remove('refreshed');
-    void promptEl.offsetWidth; // trigger reflow
+    void promptEl.offsetWidth;
     promptEl.classList.add('refreshed');
     updateCount();
   }
@@ -227,7 +224,6 @@
     return uploadedUrl !== null;
   }
 
-  // --- UI Sync Functions ---
   function syncControls() {
     if (activeEngine === 'morph') {
       controlsRow.style.display = 'none';
@@ -281,7 +277,6 @@
     });
   }
 
-  // --- File Upload Logic ---
   async function uploadToProxy(file) {
     uploadInProgress = true;
     try {
@@ -320,9 +315,6 @@
     uploadToProxy(file);
   }
 
-  // --- Event Listeners ---
-
-  // Shuffle
   document.getElementById('shuffle').addEventListener('click', () => {
     if (activeEngine === 'morph') setPrompt(nextPrompt(MORPH_PROMPTS, morphUsed));
     else setPrompt(nextPrompt(PROMPTS, nanoUsed));
@@ -330,12 +322,10 @@
 
   promptEl.addEventListener('input', updateCount);
 
-  // File Input
   fileInput.addEventListener('change', () => {
     if (fileInput.files[0]) handleFile(fileInput.files[0]);
   });
 
-  // Drag & Drop
   dropzone.addEventListener('dragover', e => {
     e.preventDefault();
     dropzone.classList.add('dragover');
@@ -347,7 +337,6 @@
     if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
   });
 
-  // Clear Upload
   document.getElementById('clearUpload').addEventListener('click', () => {
     previewImg.src = '';
     uploadPreview.className = 'upload-preview';
@@ -356,7 +345,6 @@
     syncControls();
   });
 
-  // Edit Tabs
   document.querySelectorAll('.edit-tab').forEach(tab => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.edit-tab').forEach(t => t.classList.remove('active'));
@@ -370,17 +358,14 @@
 
   editUrl.addEventListener('input', syncControls);
 
-  // Ratios
   document.querySelectorAll('.ratio').forEach(btn => {
     btn.addEventListener('click', () => setRatio(btn.dataset.r));
   });
 
-  // Resolutions
   document.querySelectorAll('.res-btn').forEach(btn => {
     btn.addEventListener('click', () => setRes(btn.dataset.res));
   });
 
-  // Engine Switching
   document.querySelectorAll('.engine-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.engine-btn').forEach(b => b.classList.remove('active'));
@@ -390,7 +375,6 @@
     });
   });
 
-  // Generate Image
   genBtn.addEventListener('click', async () => {
     const promptText = promptEl.value.trim();
     errEl.className = 'err';
@@ -427,14 +411,19 @@
         const res = await fetch(MORPH_PROXY, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ image_url: imageUrl, text: promptText })
+          body: JSON.stringify({ image_url: imageUrl, prompt: promptText })
         });
         const data = await res.json();
         if (!data.success) throw new Error(data.error || 'Transformation failed');
         finalImageUrl = data.image_url;
         engineBadge.textContent = 'Morphed';
       } else {
-        const body = { prompt: promptText, ratio: activeRatio, res: activeRes };
+        const body = {
+          text: promptText, 
+          ratio: activeRatio,
+          res: activeRes
+        };
+        
         if (imageUrl) body.image_url = imageUrl;
         
         const res = await fetch(NANO_PROXY, {
@@ -460,7 +449,6 @@
       
       resultEl.className = 'result show';
 
-      // Auto-suggest next prompt
       setTimeout(() => {
         if (activeEngine === 'morph') setPrompt(nextPrompt(MORPH_PROMPTS, morphUsed));
         else setPrompt(nextPrompt(PROMPTS, nanoUsed));
@@ -474,7 +462,6 @@
     }
   });
 
-  // Save Image
   document.getElementById('saveBtn').addEventListener('click', () => {
     const a = document.createElement('a');
     a.href = resultImg.src;
@@ -483,7 +470,6 @@
     a.click();
   });
 
-  // --- Initialize ---
   setPrompt(nextPrompt(PROMPTS, nanoUsed));
   updateCount();
   syncEngineUI();
