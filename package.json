@@ -1,0 +1,26 @@
+{
+  "name": "conjure",
+  "version": "1.0.0",
+  "description": "Multi-engine AI image generation and editing app — built with vanilla JS, deployed serverlessly on Vercel",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "devDependencies": {
+    "vercel": "^33.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "ai",
+    "image-generation",
+    "image-editing",
+    "vercel",
+    "serverless",
+    "javascript",
+    "vanilla-js"
+  ],
+  "author": "HashtagAnkit"
+}
