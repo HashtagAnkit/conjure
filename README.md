@@ -1,3 +1,4 @@
+````markdown
 # Conjure ✦
 
 > **Summon anything into existence.**  
@@ -82,7 +83,8 @@ No frameworks. No build step. No dependencies on the client side.
 
 ```
 /
-├── index.html              # Entire frontend — UI, styles, logic
+├── index.html              # App UI and logic
+├── style.css               # All custom styles
 ├── vercel.json             # Vercel config (function timeouts)
 ├── package.json            # Project metadata
 ├── .gitignore
@@ -162,3 +164,4 @@ This also keeps API keys out of client-side code entirely.
 ---
 
 <p align="center">Built by <a href="https://github.com/HashtagAnkit">@HashtagAnkit</a></p>
+````
